@@ -45,4 +45,33 @@ def delete_post(request):
         post.delete()
         messages.success(request,'ok done post deleted now')
         return redirect('/posts/')
+    
+def edit_post(request):
+    if request.method=='POST':
+        post_id=request.POST['id']
+        post=Post.objects.get(id=post_id)
+        user=request.user
+        title=request.POST['title']
+        content=request.POST['content']
+       
+        image=request.FILES['image'].name
+     
+        draft=request.POST['draft']
+        category=request.POST['category']
+
+
+        post.user=user
+        post.title=title
+        post.content=content
+        if image:
+            post.image=image
+        post.draft=draft
+        post.category_id=category
+
+        post.save()
+
+
+        messages.success(request,'ok done post EDIT now')
+        return redirect('/posts/')
+
 
