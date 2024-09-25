@@ -37,3 +37,12 @@ def add_post(request):
         )
         messages.success(request,'ok done post added now')
         return redirect('/posts/')
+    
+def delete_post(request):
+    if request.method=='POST':
+        id_post=request.POST['id']
+        post=Post.objects.get(id=id_post)
+        post.delete()
+        messages.success(request,'ok done post deleted now')
+        return redirect('/posts/')
+
