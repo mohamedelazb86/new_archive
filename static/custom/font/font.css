@@ -1,0 +1,12 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url(NotoNaskhArabic-VariableFont_wght.ttf);
+  }
+
+  body{
+    font-family: myFirstFont;
+    font-size: large;
+    font-weight: bolder;
+    font-style: italic;
+
+  }

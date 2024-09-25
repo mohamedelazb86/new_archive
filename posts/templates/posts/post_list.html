@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    المنشورات
+{% endblock title %}
+
+
+{% block page_title %}
+    المنشورات الخاصة
+
+{% endblock page_title %}
+
+{% block css %}
+  <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
+    <link href="{% static 'assets/css/scrollspyNav.css' %}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/forms/theme-checkbox-radio.css' %}">
+    <link href="{% static 'assets/css/tables/table-basic.css' %}" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL CUSTOM STYLES -->
+
+     <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
+     <link href="assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
+     <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
+     <link href="assets/css/tables/table-basic.css" rel="stylesheet" type="text/css" />
+     <!-- END PAGE LEVEL CUSTOM STYLES -->
+       <!--  BEGIN CUSTOM STYLE FILE  -->
+       <link href="{% static 'assets/css/scrollspyNav.css' %}" rel="stylesheet" type="text/css" />
+       <link href="{% static 'assets/css/components/custom-modal.css' %}" rel="stylesheet" type="text/css" />
+       <!--  END CUSTOM STYLE FILE  -->
+     
+    
+{% endblock css %}
+ 
+
+
+{% block body %}
+{% include 'parts/message.py' %}
+
+<button type="button" class="btn btn-warning mb-2 mr-2" data-toggle="modal" data-target="#addpost">إضافة منشور جديد </button>
+
+<table class="table table-bordered table-hover table-condensed mb-4">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Image</th>
+            <th>Draft</th>
+            <th>Category</th>
+           
+            <th>Publish_Date</th>
+
+            <th class="text-center">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    
+    {% for post in posts %}
+        
+  
+        
+        <tr>
+            <td>{{post.user}}</td>
+            <td>{{post.title}}</td>
+            <td>{{post.content|truncatewords:25|safe}}</td>
+            <td>{{post.image}}</td>
+            <td>{{post.draft}}</td>
+            <td>{{post.category}}</td>
+            
+            <td>{{post.publish_date}}</td>
+            <td class="text-center">
+                <ul class="table-controls">
+                    <li><a href="javascript:void(0);"  data-toggle="tooltip" data-placement="top" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle text-primary"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></a></li>
+                    <li><a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle text-danger"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                </ul>
+            </td>
+        </tr>
+
+   {% endfor %}
+      
+           
+      
+</table>
+
+<div id="addpost" class="modal animated slideInUp custo-slideInUp" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">إضافة منشور جديد</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'posts:add-post' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                
+                    <div class="form-group">
+                        
+                        <label>العنوان</label>
+                        <input id="title" type="text" name="title"  class="form-control" required>
+                        
+                    </div>
+                    <div class="form-group">
+                        
+                        <label>المحتوى</label>
+                        <input id="post_content" type="text" name="content"  class="form-control" required>
+                     
+                    </div>
+                  
+
+                    <div class="form-group mb-4 mt-3">
+                        <label for="exampleFormControlFile1">اختار الصورة</label>
+                        <input type="file" name="image" class="form-control-file" id="exampleFormControlFile1">
+
+                      
+                    </div>
+
+                    <div class="col-xl-12 mb-xl-0 mb-2">
+                        <label>الحالة</label>
+                        <select class="form-control form-control-lg" name="draft">
+                            <option disabled>Large select</option>
+                            <option value="True">True</option>
+                            <option value="False">False</option>
+                            
+                        </select>
+                    </div>
+                    <div class="col-xl-12 mb-xl-0 mb-2">
+                        <label>الفئة</label>
+                        <select class="form-control form-control-lg" name="category">
+                            <option disabled>Large select</option>
+                            
+                            {% for item in category %}
+                            <option value="{{item.id}}">{{item}}</option>
+                            {% endfor %}
+                                
+                           
+                            
+                        </select>
+                    </div>
+                    
+
+
+                    <div class="modal-footer md-button">
+                        <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
+                        <button type="submit" class="btn btn-primary">إضافة منشور جديد</button>
+                    </div>
+                </form>
+
+            </div>
+         
+        </div>
+    </div>
+</div>
+    
+{% endblock body %}
+
+
+{% block js %}
+    
+{% endblock js %}
+    
+    
+    
+    

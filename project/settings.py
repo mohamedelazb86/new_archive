@@ -41,11 +41,13 @@ INSTALLED_APPS = [
 
     # my package
     "django_bootstrap5",
+     "taggit",
+     'django_summernote',
 
     # my apps
     'posts',
-     "taggit",
-     'django_summernote',
+    'home',
+    
 ]
 
 MIDDLEWARE = [
@@ -63,7 +65,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -156,3 +158,5 @@ EMAIL_HOST_USER = 'mohamedelazab2017@gmail.com'
 EMAIL_HOST_PASSWORD = 'txwslxkjzcgdtqzd'
 
 EMAIL_USE_SSL = False
+
+LOGIN_REDIRECT_URL = '/'
