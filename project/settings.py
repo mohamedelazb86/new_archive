@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     # my apps
     'posts',
     'home',
+    'settings',
+    
     
 ]
 
