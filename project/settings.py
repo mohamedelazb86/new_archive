@@ -41,6 +41,10 @@ INSTALLED_APPS = [
 
     # my package
     "django_bootstrap5",
+
+    # my apps
+    'posts',
+     "taggit",
 ]
 
 MIDDLEWARE = [
